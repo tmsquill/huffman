@@ -7,7 +7,7 @@ stages:
 before_script:
   - apk update
   - apk upgrade
-  - apk add gcc make
+  - apk add gcc libc-dev make
   - gcc --version
   - make --version
   - make
