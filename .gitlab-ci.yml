@@ -21,7 +21,7 @@ test_encode_small:
 
 test_decode_small:
   script:
-    - ./huffdecode tests/outputs/small.txt tests/small.txt
+    - ./huffdecode tests/outputs/small.txt.huff tests/small.txt
     - diff tests/small.txt tests/inputs/small.txt
   tags:
     - tmsquill
