@@ -1,16 +1,7 @@
 FROM alpine:latest
 
-# Install packages with APK.
-RUN apk update && apk add \ 
-    gcc \
-    libc-dev \
-    make
-
 # Create a new system group and add huffman user.
 RUN addgroup -S huffman_group && adduser -S huffman -G huffman_group
-
-# Make huffman active user.
-USER huffman
 
 # Set working directory to be huffman user's home directory.
 WORKDIR /home/huffman
@@ -18,11 +9,15 @@ WORKDIR /home/huffman
 # Copy source files.
 COPY *.c *.h Makefile ./
 
-# Compile the huffman program(s).
-RUN make
+# Install packages, compile huffman program, then remove sources and packages.
+RUN apk update \
+    && apk --no-cache add --virtual .build-dependencies gcc libc-dev make \
+    && make \
+    && rm *.c *.h Makefile \
+    && apk del .build-dependencies
 
-# Remove source files.
-RUN rm *.c *.h Makefile
+# Make huffman active user.
+USER huffman
 
 # Launch a shell.
 CMD ["/bin/sh"]
