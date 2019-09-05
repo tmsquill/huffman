@@ -12,6 +12,12 @@ before_script:
   - make --version
   - make
 
+test_decode_evil:
+  script:
+    - ./huffdecode tests/outputs/evil.jpg.huff tests/evil.jpg
+  tags:
+    - tmsquill
+
 test_encode_moby_dick:
   script:
     - ./huffencode tests/inputs/MobyDick.txt tests/MobyDick.txt.huff
