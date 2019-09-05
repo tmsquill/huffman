@@ -25,3 +25,17 @@ test_decode_small:
     - diff tests/small.txt tests/inputs/small.txt
   tags:
     - tmsquill
+
+test_encode_ugly:
+  script:
+    - ./huffencode tests/inputs/ugly.txt tests/ugly.txt.huff
+    - diff tests/ugly.txt.huff tests/outputs/ugly.txt.huff
+  tags:
+    - tmsquill
+
+test_decode_small:
+  script:
+    - ./huffdecode tests/outputs/ugly.txt.huff tests/ugly.txt
+    - diff tests/ugly.txt tests/inputs/ugly.txt
+  tags:
+    - tmsquill
