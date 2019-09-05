@@ -1,0 +1,27 @@
+image: "alpine:latest"
+
+stages:
+  - build
+  - test
+
+before_script:
+  - apk update
+  - apk upgrade
+  - apk add gcc make
+  - gcc --version
+  - make --version
+  - make
+
+test_encode_simple:
+  script:
+    - ./huffencode tests/inputs/simple.txt tests/simple.txt.huff
+    - diff tests/simple.txt.huff tests/outputs/simple.txt.huff
+  tags:
+    - tmsquill
+
+test_decode_simple:
+  script:
+    - ./huffdecode tests/outputs/simple.txt.huff tests/simple.txt
+    - diff tests/simple.txt.huff tests/inputs/simple.txt
+  tags:
+    - tmsquill
