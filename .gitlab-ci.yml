@@ -12,16 +12,16 @@ before_script:
   - make --version
   - make
 
-test_encode_simple:
+test_encode_small:
   script:
-    - ./huffencode tests/inputs/simple.txt tests/simple.txt.huff
-    - diff tests/simple.txt.huff tests/outputs/simple.txt.huff
+    - ./huffencode tests/inputs/small.txt tests/small.txt.huff
+    - diff tests/small.txt.huff tests/outputs/small.txt.huff
   tags:
     - tmsquill
 
-test_decode_simple:
+test_decode_small:
   script:
-    - ./huffdecode tests/outputs/simple.txt.huff tests/simple.txt
-    - diff tests/simple.txt.huff tests/inputs/simple.txt
+    - ./huffdecode tests/outputs/small.txt.huff tests/small.txt
+    - diff tests/small.txt.huff tests/inputs/small.txt
   tags:
     - tmsquill
