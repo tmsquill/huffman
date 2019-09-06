@@ -1,7 +1,6 @@
 image: "alpine:latest"
 
 stages:
-  - build
   - test
 
 before_script:
@@ -20,8 +19,9 @@ test_decode_evil:
 
 test_encode_moby_dick:
   script:
-    - ./huffencode tests/inputs/MobyDick.txt tests/MobyDick.txt.huff
+    - ./huffencode tests/inputs/MobyDick.txt tests/MobyDick.txt.huff > tests/ftable.txt
     - diff tests/MobyDick.txt.huff tests/outputs/MobyDick.txt.huff
+    - diff tests/ftable.txt tests/ftables/MobyDickfreq.txt
   tags:
     - tmsquill
 
@@ -34,8 +34,9 @@ test_decode_moby_dick:
 
 test_encode_mississippi:
   script:
-    - ./huffencode tests/inputs/mississippi.txt tests/mississippi.txt.huff
+    - ./huffencode tests/inputs/mississippi.txt tests/mississippi.txt.huff > tests/ftable.txt
     - diff tests/mississippi.txt.huff tests/outputs/mississippi.txt.huff
+    - diff tests/ftable.txt tests/ftables/mississippifreq.txt
   tags:
     - tmsquill
 
@@ -48,8 +49,9 @@ test_decode_mississippi:
 
 test_encode_ralph:
   script:
-    - ./huffencode tests/inputs/ralph.bmp tests/ralph.bmp.huff
+    - ./huffencode tests/inputs/ralph.bmp tests/ralph.bmp.huff > tests/ftable.txt
     - diff tests/ralph.bmp.huff tests/outputs/ralph.bmp.huff
+    - diff tests/ftable.txt tests/ftables/ralphfreq.txt
   tags:
     - tmsquill
 
@@ -62,8 +64,9 @@ test_decode_ralph:
 
 test_encode_sense:
   script:
-    - ./huffencode tests/inputs/sense.html tests/sense.html.huff
+    - ./huffencode tests/inputs/sense.html tests/sense.html.huff > tests/ftable.txt
     - diff tests/sense.html.huff tests/outputs/sense.html.huff
+    - diff tests/ftable.txt tests/ftables/sensefreq.txt
   tags:
     - tmsquill
 
@@ -76,8 +79,9 @@ test_decode_sense:
 
 test_encode_small:
   script:
-    - ./huffencode tests/inputs/small.txt tests/small.txt.huff
+    - ./huffencode tests/inputs/small.txt tests/small.txt.huff > tests/ftable.txt
     - diff tests/small.txt.huff tests/outputs/small.txt.huff
+    - diff tests/ftable.txt tests/ftables/smallfreq.txt
   tags:
     - tmsquill
 
@@ -90,8 +94,9 @@ test_decode_small:
 
 test_encode_ugly:
   script:
-    - ./huffencode tests/inputs/ugly.txt tests/ugly.txt.huff
+    - ./huffencode tests/inputs/ugly.txt tests/ugly.txt.huff > tests/ftable.txt
     - diff tests/ugly.txt.huff tests/outputs/ugly.txt.huff
+    - diff tests/ftable.txt tests/ftables/uglyfreq.txt
   tags:
     - tmsquill
 
