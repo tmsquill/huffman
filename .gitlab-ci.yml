@@ -2,22 +2,25 @@ image: "alpine:latest"
 
 stages:
   - test
+  - deploy
 
 before_script:
   - apk update
   - apk upgrade
-  - apk add gcc libc-dev make
+  - apk add curl gcc libc-dev make
   - gcc --version
   - make --version
   - make
 
 test_decode_evil:
+  stage: test
   script:
     - ./huffdecode tests/outputs/evil.jpg.huff tests/evil.jpg
   tags:
     - tmsquill
 
 test_encode_moby_dick:
+  stage: test
   script:
     - ./huffencode tests/inputs/MobyDick.txt tests/MobyDick.txt.huff > tests/ftable.txt
     - diff tests/MobyDick.txt.huff tests/outputs/MobyDick.txt.huff
@@ -26,6 +29,7 @@ test_encode_moby_dick:
     - tmsquill
 
 test_decode_moby_dick:
+  stage: test
   script:
     - ./huffdecode tests/outputs/MobyDick.txt.huff tests/MobyDick.txt
     - diff tests/MobyDick.txt tests/inputs/MobyDick.txt
@@ -33,6 +37,7 @@ test_decode_moby_dick:
     - tmsquill
 
 test_encode_mississippi:
+  stage: test
   script:
     - ./huffencode tests/inputs/mississippi.txt tests/mississippi.txt.huff > tests/ftable.txt
     - diff tests/mississippi.txt.huff tests/outputs/mississippi.txt.huff
@@ -41,6 +46,7 @@ test_encode_mississippi:
     - tmsquill
 
 test_decode_mississippi:
+  stage: test
   script:
     - ./huffdecode tests/outputs/mississippi.txt.huff tests/mississippi.txt
     - diff tests/mississippi.txt tests/inputs/mississippi.txt
@@ -48,6 +54,7 @@ test_decode_mississippi:
     - tmsquill
 
 test_encode_ralph:
+  stage: test
   script:
     - ./huffencode tests/inputs/ralph.bmp tests/ralph.bmp.huff > tests/ftable.txt
     - diff tests/ralph.bmp.huff tests/outputs/ralph.bmp.huff
@@ -56,6 +63,7 @@ test_encode_ralph:
     - tmsquill
 
 test_decode_ralph:
+  stage: test
   script:
     - ./huffdecode tests/outputs/ralph.bmp.huff tests/ralph.bmp
     - diff tests/ralph.bmp tests/inputs/ralph.bmp
@@ -63,6 +71,7 @@ test_decode_ralph:
     - tmsquill
 
 test_encode_sense:
+  stage: test
   script:
     - ./huffencode tests/inputs/sense.html tests/sense.html.huff > tests/ftable.txt
     - diff tests/sense.html.huff tests/outputs/sense.html.huff
@@ -71,6 +80,7 @@ test_encode_sense:
     - tmsquill
 
 test_decode_sense:
+  stage: test
   script:
     - ./huffdecode tests/outputs/sense.html.huff tests/sense.html
     - diff tests/sense.html tests/inputs/sense.html
@@ -78,6 +88,7 @@ test_decode_sense:
     - tmsquill
 
 test_encode_small:
+  stage: test
   script:
     - ./huffencode tests/inputs/small.txt tests/small.txt.huff > tests/ftable.txt
     - diff tests/small.txt.huff tests/outputs/small.txt.huff
@@ -86,6 +97,7 @@ test_encode_small:
     - tmsquill
 
 test_decode_small:
+  stage: test
   script:
     - ./huffdecode tests/outputs/small.txt.huff tests/small.txt
     - diff tests/small.txt tests/inputs/small.txt
@@ -93,6 +105,7 @@ test_decode_small:
     - tmsquill
 
 test_encode_ugly:
+  stage: test
   script:
     - ./huffencode tests/inputs/ugly.txt tests/ugly.txt.huff > tests/ftable.txt
     - diff tests/ugly.txt.huff tests/outputs/ugly.txt.huff
@@ -101,8 +114,19 @@ test_encode_ugly:
     - tmsquill
 
 test_decode_ugly:
+  stage: test
   script:
     - ./huffdecode tests/outputs/ugly.txt.huff tests/ugly.txt
     - diff tests/ugly.txt tests/inputs/ugly.txt
   tags:
     - tmsquill
+
+deploy_huffman:
+  stage: deploy
+  script:
+    - curl --header 'Content-Type: application/json'  --header "PRIVATE-TOKEN: Vd22zzP2qvzvv-nz6X-C" "https://gitlab.com/api/v4/projects/tmsquill%2Fhuffman/releases" --data '{ "name": "Huffman $CI_COMMIT_TAG", "tag_name": "$CI_COMMIT_TAG", "description": "Huffman encoding and decoding programs. Written to work with arbitrary data.", "milestones": [], "assets": { "links": [{ "name": "Algorithm", "url": "https://en.wikipedia.org/wiki/Huffman_coding" }] } }' --request POST https://gitlab.com/api/v4/projects/tmsquill%2Fhuffman/releases 
+  tags:
+    - tmsquill
+  only:
+    - tags
+
