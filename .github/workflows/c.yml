@@ -1,0 +1,29 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test_decode_evil:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: make
+      run: make
+    - name: test
+      run: ./huffdecode tests/outputs/evil.jpg.huff tests/evil.jpg
+  test_encode_moby_dick:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: make
+      run: make
+    - name: test
+      run: |
+        ./huffencode tests/inputs/MobyDick.txt tests/MobyDick.txt.huff > tests/ftable.txt
+        diff tests/MobyDick.txt.huff tests/outputs/MobyDick.txt.huff
+        diff tests/ftable.txt tests/ftables/MobyDickfreq.txt
+
