@@ -26,4 +26,118 @@ jobs:
         ./huffencode tests/inputs/MobyDick.txt tests/MobyDick.txt.huff > tests/ftable.txt
         diff tests/MobyDick.txt.huff tests/outputs/MobyDick.txt.huff
         diff tests/ftable.txt tests/ftables/MobyDickfreq.txt
-
+  test_decode_moby_dick:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: make
+      run: make
+    - name: test
+      run: |
+        ./huffdecode tests/outputs/MobyDick.txt.huff tests/MobyDick.txt
+        diff tests/MobyDick.txt tests/inputs/MobyDick.txt
+  test_encode_mississippi:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: make
+      run: make
+    - name: test
+      run: |
+        ./huffencode tests/inputs/mississippi.txt tests/mississippi.txt.huff > tests/ftable.txt
+        diff tests/mississippi.txt.huff tests/outputs/mississippi.txt.huff
+        diff tests/ftable.txt tests/ftables/mississippifreq.txt
+  test_decode_mississippi:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: make
+      run: make
+    - name: test
+      run: |
+        ./huffdecode tests/outputs/mississippi.txt.huff tests/mississippi.txt
+        diff tests/mississippi.txt tests/inputs/mississippi.txt
+  test_encode_ralph:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: make
+      run: make
+    - name: test
+      run: |
+        ./huffencode tests/inputs/ralph.bmp tests/ralph.bmp.huff > tests/ftable.txt
+        diff tests/ralph.bmp.huff tests/outputs/ralph.bmp.huff
+        diff tests/ftable.txt tests/ftables/ralphfreq.txt
+  test_decode_ralph:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: make
+      run: make
+    - name: test
+      run: |
+        ./huffdecode tests/outputs/ralph.bmp.huff tests/ralph.bmp
+        diff tests/ralph.bmp tests/inputs/ralph.bmp
+  test_encode_sense:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: make
+      run: make
+    - name: test
+      run: |
+        ./huffencode tests/inputs/sense.html tests/sense.html.huff > tests/ftable.txt
+        diff tests/sense.html.huff tests/outputs/sense.html.huff
+        diff tests/ftable.txt tests/ftables/sensefreq.txt
+  test_decode_sense:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: make
+      run: make
+    - name: test
+      run: |
+        ./huffdecode tests/outputs/sense.html.huff tests/sense.html
+        diff tests/sense.html tests/inputs/sense.html
+  test_encode_small:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: make
+      run: make
+    - name: test
+      run: |
+        ./huffencode tests/inputs/small.txt tests/small.txt.huff > tests/ftable.txt
+        diff tests/small.txt.huff tests/outputs/small.txt.huff
+        diff tests/ftable.txt tests/ftables/smallfreq.txt
+  test_decode_small:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: make
+      run: make
+    - name: test
+      run: |
+        ./huffdecode tests/outputs/small.txt.huff tests/small.txt
+        diff tests/small.txt tests/inputs/small.txt
+  test_encode_ugly:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: make
+      run: make
+    - name: test
+      run: |
+        ./huffencode tests/inputs/ugly.txt tests/ugly.txt.huff > tests/ftable.txt
+        diff tests/ugly.txt.huff tests/outputs/ugly.txt.huff
+        diff tests/ftable.txt tests/ftables/uglyfreq.txt
+  test_decode_ugly:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: make
+      run: make
+    - name: test
+      run: |
+        ./huffdecode tests/outputs/ugly.txt.huff tests/ugly.txt
+        diff tests/ugly.txt tests/inputs/ugly.txt
